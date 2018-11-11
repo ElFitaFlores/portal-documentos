@@ -1,0 +1,4 @@
+name: documentos
+recipe: laravel
+config:
+  webroot: public/
