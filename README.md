@@ -13,6 +13,7 @@
 -   Generar clave para validar la aplicacion de Laravel `php artisan key:generate`
 -   Crear tablas en la base de datos `php artisan migrate --seed`
 -   Se creará automaticamente el primer usuario administrador (usuario: admin, contraseña: secret)
+-   Crear el enlace simbolico para poder acceder a los archivos subido `php artisan storage:link`
 -   Levantar el servidor `php artisan serve`
 
 
