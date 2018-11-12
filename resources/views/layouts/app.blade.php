@@ -35,8 +35,13 @@
                     <ul class="navbar-nav mr-auto">
                         @auth
                         <li class="nav-item">
-                            <a class="nav-link" href="documentos">Documentos</a>
+                            <a class="nav-link" href="/documentos">Documentos</a>
                         </li>
+                        @if(auth()->user()->type == 'admin')
+                        <li class="nav-item">
+                            <a class="nav-link" href="/usuarios">Usuarios</a>
+                        </li>
+                        @endif
                         @endauth
                     </ul>
 

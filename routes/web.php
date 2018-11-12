@@ -12,11 +12,10 @@
 */
 
 Route::get('/', function () {
-    return view('auth.login');
-});
+    return view('home');
+})->middleware('auth');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
 Route::resource('documentos', 'DocumentoController')->middleware('auth');
+Route::resource('usuarios', 'UsuarioController')->middleware('auth');

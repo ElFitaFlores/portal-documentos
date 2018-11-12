@@ -6,11 +6,19 @@
 
 **Pasos**
 -   Abrir una ventana en la terminal e ingresar a la carpeta donde se encuentra el proyecto
--   composer install
--   npm install
+-   Instalar paquetes de PHP con `composer install`
 -   Copiar el archivo .env.example en la misma ubicacion con el nombre .env
--   Colocar las credenciales de la base de datos (mysql)
--   php artisan key:generate
--   php artisan migrate --seed
+-   Crear una base de datos vacia
+-   Colocar las credenciales de la base de datos (mysql) en el nuevo archivo (.env)
+-   Generar clave para validar la aplicacion de Laravel `php artisan key:generate`
+-   Crear tablas en la base de datos `php artisan migrate --seed`
 -   Se creará automaticamente el primer usuario administrador (usuario: admin, contraseña: secret)
--   php artisan serve
+-   Levantar el servidor `php artisan serve`
+
+
+**Consideraciones**
+-   Por cuestiones de practicidad se dejaron unicamente dos opciones en el menú (Documentos y Usuarios)
+-   En "Documentos" se muestra la opción para crear, buscar y el reporte de documentos creados
+-   En "Usuarios" se muestra la administracion completa de los usuarios
+-   Un usuario administrador no puede eliminarse a si mismo
+-   La aplicación cumple con las lista de requerimientos del documento provisto

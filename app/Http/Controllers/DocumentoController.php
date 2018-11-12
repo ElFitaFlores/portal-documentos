@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Documento;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentoController extends Controller
 {
@@ -12,9 +13,16 @@ class DocumentoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('documento-list')->with(['data' => Documento::all()]);
+        if($request->input('no_doc') != "")
+            $data = Documento::where('no_doc', $request->input('no_doc'))->get();
+        elseif ($request->input('tipo') != "")
+            $data = Documento::where('tipo', $request->input('tipo'))->get();
+        else
+            $data = Documento::all();
+
+        return view('documento-list')->with(['data' => $data]);
     }
 
     /**
@@ -24,7 +32,14 @@ class DocumentoController extends Controller
      */
     public function create()
     {
-        return view('documento');
+        $documento = (object) [
+            'no_doc' => NULL,
+            'asunto' => NULL,
+            'descripcion' => NULL,
+            'fecha' => NULL,
+            'tipo' => NULL,
+        ];
+        return view('documento')->with(['documento' => $documento, 'id' => NULL]);
     }
 
     /**
@@ -35,7 +50,6 @@ class DocumentoController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->hasFile('archivo'));
         $documento = new Documento();
         $documento->no_doc = $request->input('no_doc');
         $documento->asunto = $request->input('asunto');
@@ -56,7 +70,9 @@ class DocumentoController extends Controller
      */
     public function show($id)
     {
-        //
+        $documento = Documento::find($id);
+        $path = Storage::url($documento->archivo);
+        return view('documento')->with(['documento' => $documento, 'id' => '/'.$id, 'path' => $path]);
     }
 
     /**
@@ -79,7 +95,15 @@ class DocumentoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $documento = Documento::find($id);
+        $documento->no_doc = $request->input('no_doc');
+        $documento->asunto = $request->input('asunto');
+        $documento->descripcion = $request->input('descripcion');
+        $documento->fecha = $request->input('fecha');
+        $documento->tipo = $request->input('tipo');
+        $documento->save();
+
+        return redirect('documentos');
     }
 
     /**
