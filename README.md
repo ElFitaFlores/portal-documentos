@@ -23,3 +23,4 @@
 -   En "Usuarios" se muestra la administracion completa de los usuarios
 -   Un usuario administrador no puede eliminarse a si mismo
 -   La aplicación cumple con las lista de requerimientos del documento provisto
+-   Los documentos subidos no se pueden cambiar, si se quisiera cambiar algun documento se procede a crear uno nuevo
