@@ -4,7 +4,7 @@
 -   PHP >= 7.1.3
 -   MYSQL
 
-**Pasos**
+**Pasos para levantar la aplicación**
 -   Abrir una ventana en la terminal e ingresar a la carpeta donde se encuentra el proyecto
 -   Instalar paquetes de PHP con `composer install`
 -   Copiar el archivo .env.example en la misma ubicacion con el nombre .env
