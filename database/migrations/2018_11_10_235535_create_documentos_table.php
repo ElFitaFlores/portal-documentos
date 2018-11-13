@@ -21,7 +21,10 @@ class CreateDocumentosTable extends Migration
             $table->date('fecha');
             $table->string('descripcion');
             $table->string('archivo');
+            $table->unsignedInteger('user_id');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

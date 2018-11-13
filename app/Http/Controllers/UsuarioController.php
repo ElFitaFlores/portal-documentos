@@ -42,12 +42,13 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        User::create([
-            'name' => $request->input('name'),
-            'email' => str_replace(' ', '', $request->input('email')),
-            'password' => Hash::make($request->input('password')),
-            'type' => $request->input('type'),
-        ]);
+        $user = new User();
+        $user->name = $request->input('name');
+        $user->email = str_replace(' ', '', $request->input('email'));
+        $user->type = $request->input('type');
+        $user->password = Hash::make($request->input('password'));
+
+        $user->save();
 
         return redirect('usuarios');
     }

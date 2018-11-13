@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Documento;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,7 +23,29 @@ class DocumentoController extends Controller
         else
             $data = Documento::all();
 
+        $data->transform(function($item, $key){
+            $item->archivo = Storage::url($item->archivo);
+            return $item;
+        });
+
         return view('documento-list')->with(['data' => $data]);
+    }
+
+    public function reportes(Request $request)
+    {
+        $data = Documento::with('user');
+
+        if($request->input('tipo'))
+            $data->where('tipo', $request->input('tipo'));
+
+        if($request->input('usuario'))
+            $data->where('user_id', $request->input('usuario'));
+
+        if($request->input('date_from') && $request->input('date_to'))
+            $data->whereBetween('fecha', [$request->input('date_from'),$request->input('date_to')]);
+
+        //dd($data->get());
+        return view('documento-reportes')->with(['data' => $data->get(), 'users' => User::all()    ]);
     }
 
     /**
@@ -57,6 +80,7 @@ class DocumentoController extends Controller
         $documento->fecha = $request->input('fecha');
         $documento->tipo = $request->input('tipo');
         $documento->archivo = $request->file('archivo')->store('public');
+        $documento->user_id = auth()->user()->id;
         $documento->save();
 
         return redirect('documentos');
@@ -101,6 +125,10 @@ class DocumentoController extends Controller
         $documento->descripcion = $request->input('descripcion');
         $documento->fecha = $request->input('fecha');
         $documento->tipo = $request->input('tipo');
+
+        if($request->hasFile('archivo'))
+            $documento->archivo = $request->file('archivo')->store('public');
+
         $documento->save();
 
         return redirect('documentos');

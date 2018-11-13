@@ -40,9 +40,11 @@
                                     <th>Descripción</th>
                                     <th>Fecha</th>
                                     <th>Tipo</th>
+                                    <th>Documento</th>
                                 </tr>
                             </thead>
                             <tbody>
+                            @if(auth()->user()->type == 'admin')
                                 @foreach($data as $doc)
                                     <tr>
                                         <td>
@@ -60,8 +62,36 @@
                                         <td>
                                             <a href="/documentos/{{$doc->id}}">{{$doc->tipo}}</a>
                                         </td>
+                                        <td>
+                                            <a href="{{$doc->archivo}}">Descargar</a>
+                                        </td>
                                     </tr>
                                 @endforeach
+                            @else
+                                @foreach($data as $doc)
+                                    <tr>
+                                        <td>
+                                            {{$doc->no_doc}}
+                                        </td>
+                                        <td>
+                                            {{$doc->asunto}}
+                                        </td>
+                                        <td>
+                                            {{$doc->descripcion}}
+                                        </td>
+                                        <td>
+                                            {{$doc->fecha}}
+                                        </td>
+                                        <td>
+                                            {{$doc->tipo}}
+                                        </td>
+                                        <td>
+                                            <a href="{{$doc->archivo}}">Descargar</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
+
                             </tbody>
                         </table>
                     </div>

@@ -58,11 +58,7 @@
                                 <label for="archivo" class="col-sm-4 col-form-label text-md-right">PDF</label>
 
                                 <div class="col-md-6">
-                                    @if($id)
-                                        <a href="{{$path}}" class="btn btn-secondary">Descargar</a>
-                                    @else
-                                        <input id="archivo" type="file" class="form-control-file" name="archivo" required>
-                                    @endif
+                                    <input id="archivo" type="file" class="form-control-file" name="archivo" {{$id ? '' : 'required'}}>
                                 </div>
                             </div>
                             <div class="form-group row">

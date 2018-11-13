@@ -19,3 +19,4 @@ Auth::routes();
 
 Route::resource('documentos', 'DocumentoController')->middleware('auth');
 Route::resource('usuarios', 'UsuarioController')->middleware('auth');
+Route::get('reportes', 'DocumentoController@reportes')->middleware('auth');
