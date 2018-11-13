@@ -26,6 +26,16 @@
                                         <option value="Memo">Memo</option>
                                     </select>
                                 </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-5">
+                                    <label for="date_from" class="col-sm-4 col-form-label text-md-right">Fecha desde</label>
+                                    <input type="date" class="form-control" name="date_from">
+                                </div>
+                                <div class="col-md-5">
+                                    <label for="date_from" class="col-sm-4 col-form-label text-md-right">Fecha hasta</label>
+                                    <input type="date" class="form-control" name="date_to">
+                                </div>
                                 <div class="col-md-2">
                                     <br>
                                     <input type="submit" class="btn btn-primary" value="Buscar" required>

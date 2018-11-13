@@ -16,12 +16,18 @@ class DocumentoController extends Controller
      */
     public function index(Request $request)
     {
+        $data = Documento::query();
+
         if($request->input('no_doc') != "")
-            $data = Documento::where('no_doc', $request->input('no_doc'))->get();
-        elseif ($request->input('tipo') != "")
-            $data = Documento::where('tipo', $request->input('tipo'))->get();
-        else
-            $data = Documento::all();
+            $data->where('no_doc', $request->input('no_doc'))->get();
+
+        if ($request->input('tipo') != "")
+            $data->where('tipo', $request->input('tipo'))->get();
+
+        if($request->input('date_from') && $request->input('date_to'))
+            $data->whereBetween('fecha', [$request->input('date_from'),$request->input('date_to')]);
+
+        $data = $data->get();
 
         $data->transform(function($item, $key){
             $item->archivo = Storage::url($item->archivo);
