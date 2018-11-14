@@ -49,16 +49,18 @@
                                 <div class="col-md-1 offset-4">
                                     <input type="submit" class="btn btn-primary" value="Guardar">
                                 </div>
+                        </form>
                                 @if($id && auth()->user()->id != $usuario->id)
                                 <div class="col-md-1 offset-1">
-                                    <form action="/usuarios/{{$usuario->id}}">
+                                    <form action="/usuarios/{{$usuario->id}}" method="post">
                                         @method('DELETE')
+                                        @csrf
                                         <input type="submit" class="btn btn-danger" value="Borrar">
                                     </form>
                                 </div>
                                 @endif
                             </div>
-                        </form>
+
                     </div>
                 </div>
             </div>

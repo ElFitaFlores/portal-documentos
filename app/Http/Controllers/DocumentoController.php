@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Cliente;
 use App\Documento;
 use App\User;
 use Illuminate\Http\Request;
@@ -19,10 +20,13 @@ class DocumentoController extends Controller
         $data = Documento::query();
 
         if($request->input('no_doc') != "")
-            $data->where('no_doc', $request->input('no_doc'))->get();
+            $data->where('no_doc', $request->input('no_doc'));
 
         if ($request->input('tipo') != "")
-            $data->where('tipo', $request->input('tipo'))->get();
+            $data->where('tipo', $request->input('tipo'));
+
+        if ($request->input('cliente') != "")
+            $data->where('cliente_id', $request->input('cliente'));
 
         if($request->input('date_from') && $request->input('date_to'))
             $data->whereBetween('fecha', [$request->input('date_from'),$request->input('date_to')]);
@@ -34,7 +38,7 @@ class DocumentoController extends Controller
             return $item;
         });
 
-        return view('documento-list')->with(['data' => $data]);
+        return view('documento-list')->with(['data' => $data, 'clientes' => Cliente::where('estado', 'activo')->get()]);
     }
 
     public function reportes(Request $request)
@@ -50,8 +54,10 @@ class DocumentoController extends Controller
         if($request->input('date_from') && $request->input('date_to'))
             $data->whereBetween('fecha', [$request->input('date_from'),$request->input('date_to')]);
 
-        //dd($data->get());
-        return view('documento-reportes')->with(['data' => $data->get(), 'users' => User::all()    ]);
+        if ($request->input('cliente') != "")
+            $data->where('cliente_id', $request->input('cliente'));
+
+        return view('documento-reportes')->with(['data' => $data->get(), 'users' => User::all(), 'clientes' => Cliente::where('estado', 'activo')->get()]);
     }
 
     /**
@@ -67,8 +73,9 @@ class DocumentoController extends Controller
             'descripcion' => NULL,
             'fecha' => NULL,
             'tipo' => NULL,
+            'cliente_id' => NULL,
         ];
-        return view('documento')->with(['documento' => $documento, 'id' => NULL]);
+        return view('documento')->with(['documento' => $documento, 'id' => NULL, 'clientes' => Cliente::where('estado', 'activo')->get()]);
     }
 
     /**
@@ -86,6 +93,7 @@ class DocumentoController extends Controller
         $documento->fecha = $request->input('fecha');
         $documento->tipo = $request->input('tipo');
         $documento->archivo = $request->file('archivo')->store('public');
+        $documento->cliente_id = $request->input('cliente');
         $documento->user_id = auth()->user()->id;
         $documento->save();
 
@@ -102,7 +110,7 @@ class DocumentoController extends Controller
     {
         $documento = Documento::find($id);
         $path = Storage::url($documento->archivo);
-        return view('documento')->with(['documento' => $documento, 'id' => '/'.$id, 'path' => $path]);
+        return view('documento')->with(['documento' => $documento, 'id' => '/'.$id, 'path' => $path, 'clientes' => Cliente::where('estado', 'activo')->get()]);
     }
 
     /**
@@ -131,6 +139,7 @@ class DocumentoController extends Controller
         $documento->descripcion = $request->input('descripcion');
         $documento->fecha = $request->input('fecha');
         $documento->tipo = $request->input('tipo');
+        $documento->cliente_id = $request->input('cliente');
 
         if($request->hasFile('archivo'))
             $documento->archivo = $request->file('archivo')->store('public');

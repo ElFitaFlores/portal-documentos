@@ -12,8 +12,8 @@
                     <div class="card-body">
                         <form action="">
                             <div class="form-group row">
-                                <div class="col-md-5">
-                                    <label for="usuario" class="col-sm-4 col-form-label text-md-right">Usuario</label>
+                                <div class="col-md-5 offset-1">
+                                    <label for="usuario" class="col-sm-4 col-form-label text-md-left">Usuario</label>
                                     <select name="usuario" id="usuario" class="form-control">
                                         <option value="" selected>Todos</option>
                                         @foreach($users as $user)
@@ -22,7 +22,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-5">
-                                    <label for="no_doc" class="col-sm-4 col-form-label text-md-right">Tipo</label>
+                                    <label for="no_doc" class="col-sm-4 col-form-label text-md-left">Tipo</label>
                                     <select name="tipo" id="tipo" class="form-control">
                                         <option value="">Todos</option>
                                         <option value="Oficio">Oficio</option>
@@ -33,13 +33,24 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <div class="col-md-5">
-                                    <label for="date_from" class="col-sm-4 col-form-label text-md-right">Fecha desde</label>
+                                <div class="col-md-5 offset-1">
+                                    <label for="date_from" class="col-sm-4 col-form-label text-md-left">Fecha desde</label>
                                     <input type="date" class="form-control" name="date_from">
                                 </div>
                                 <div class="col-md-5">
-                                    <label for="date_from" class="col-sm-4 col-form-label text-md-right">Fecha hasta</label>
+                                    <label for="date_from" class="col-sm-4 col-form-label text-md-left">Fecha hasta</label>
                                     <input type="date" class="form-control" name="date_to">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-5 offset-1">
+                                    <label for="cliente" class="col-sm-4 col-form-label text-md-left">Cliente</label>
+                                    <select name="cliente" id="cliente" class="form-control">
+                                        <option value="">Todos</option>
+                                        @foreach($clientes as $cliente)
+                                            <option value="{{$cliente->id}}">{{$cliente->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="col-md-2">
                                     <br>
@@ -56,6 +67,7 @@
                                     <th>Fecha</th>
                                     <th>Tipo</th>
                                     <th>Usuario</th>
+                                    <th>Cliente</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -78,6 +90,9 @@
                                     </td>
                                     <td>
                                         {{$doc->user->name}}
+                                    </td>
+                                    <td>
+                                        {{$doc->cliente->name}}
                                     </td>
                                 </tr>
                             @endforeach

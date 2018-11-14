@@ -54,6 +54,17 @@
                                     </select>
                                 </div>
                             </div>
+                                <div class="form-group row">
+                                    <label for="fecha" class="col-sm-4 col-form-label text-md-right">Cliente</label>
+
+                                    <div class="col-md-6">
+                                        <select name="cliente" id="cliente" class="form-control">
+                                            @foreach($clientes as $cliente)
+                                                <option value="{{$cliente->id}}" {{$documento->cliente_id == $cliente->id ? 'selected' : ''}}>{{$cliente->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             <div class="form-group row">
                                 <label for="archivo" class="col-sm-4 col-form-label text-md-right">PDF</label>
 

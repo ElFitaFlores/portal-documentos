@@ -61,6 +61,9 @@
                         </li>
                         @if(auth()->user()->type == 'admin')
                         <li class="nav-item">
+                            <a class="nav-link" href="/clientes">Clientes</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="/usuarios">Usuarios</a>
                         </li>
                         @endif
